@@ -1,3 +1,5 @@
+import camb_cosmo
+
 
 # mean and covariance from https://github.com/cosmodesi/desi-y3-kp/blob/24c317301256d659f819c4b17cc3ed4a154bf303/desi_y3_cosmo_bindings/cobaya_likelihoods/cmb_likelihoods/CMB_standard_compression_PR4.yaml
 all_input_params = ['thetastar', 'ombh2', 'ombch2']
@@ -5,6 +7,7 @@ all_means = [0.01041027, 0.02223208, 0.14207901]
 all_covs = [[ 6.62099420e-12,  1.24442058e-10, -1.19287532e-09], 
             [ 1.24442058e-10,  2.13441666e-08, -9.40008323e-08], 
             [-1.19287532e-09, -9.40008323e-08,  1.48841714e-06]]
+
 
 def get_compressed_cmb_likelihood(thetastar=True, ombh2=False, ombch2=False):
     # Cobaya needs these to be in the right order
@@ -52,3 +55,22 @@ def get_fiducial_ombh2():
 def get_fiducial_ombch2():
     return all_means[2]
 
+
+def get_fiducial_cosmology(thetastar=None, ombh2=None, ombch2=None,
+                           mnu=0.06, omk=0, w=-1, wa=0):
+    # specify cosmology used in compressed CMB likelihood
+    if thetastar is None:
+        thetastar = get_fiducial_thetastar()
+    if ombh2 is None:
+        ombh2 = get_fiducial_ombh2()
+    if ombch2 is None:
+        ombch2 = get_fiducial_ombch2()
+
+    # compute CDM density
+    omch2 = ombch2 - ombh2
+
+    # get CAMB cosmology object
+    cosmo = camb_cosmo.get_cosmology(thetastar=thetastar, H0=None, ombh2=ombh2,
+                                     omch2=omch2, mnu=mnu, omk=omk, w=w, wa=wa)
+
+    return cosmo
