@@ -52,9 +52,9 @@ def get_bao_params_config(model='lcdm'):
             'ref': {
                 'dist': 'norm',
                 'loc': 99.0,
-                'scale': 1.0
+                'scale': 0.1
             },
-            'proposal': 1.0,
+            'proposal': 0.1,
             'latex': 'hr_\\mathrm{d}'
         },
         'omm': {
@@ -64,8 +64,8 @@ def get_bao_params_config(model='lcdm'):
             },
             'ref': {
                 'dist': 'norm',
-                'loc': 0.3152,
-                'scale': 0.002
+                'loc': 0.315,
+                'scale': 0.001
             },
             'proposal': 0.001,
             'drop': 'true'
