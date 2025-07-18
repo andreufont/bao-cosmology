@@ -40,6 +40,31 @@ def get_bao_like_configs(labels, data_path):
     return config
 
 
+def write_single_bao_config(model, label, data_path, runs_path):
+    """ Write a configuration file for Cobaya, given model and BAO data """
+
+    config = {}
+    config['theory'] = cobaya_defaults.get_theory_config()
+    config['sampler'] = cobaya_defaults.get_sampler_config()
+    config['params'] = cobaya_defaults.get_bao_params_config(model=model)
+
+    # setup BAO configuration
+    bao_like = get_bao_like_config(label=label, data_path=data_path)
+    config['likelihood'] = {label: bao_like}
+        
+    # path to chains
+    run_path = (runs_path / 'bao' / model / label).resolve()
+    my_mkdir(run_path)
+    config['output'] = str(run_path / 'chain')
+
+    # store config file
+    config_file = run_path / 'cobaya_config.yaml'
+    write_yaml(config, config_file)
+    print('wrote cobaya config file', config_file)
+
+    return config_file
+
+
 def write_multiple_bao_config(model, run_label, bao_labels, data_path, runs_path):
     """ Write a configuration file for Cobaya, given model and BAO data """
 
@@ -65,21 +90,19 @@ def write_multiple_bao_config(model, run_label, bao_labels, data_path, runs_path
     return config_file
 
 
-
-def write_single_bao_config(model, label, data_path, runs_path):
-    """ Write a configuration file for Cobaya, given model and BAO data """
+def write_cmb_cobaya_config(model, run_label, cmb_like, runs_path):
+    """ Write a configuration file for Cobaya, given compressed CMB likelihood """
 
     config = {}
     config['theory'] = cobaya_defaults.get_theory_config()
     config['sampler'] = cobaya_defaults.get_sampler_config()
-    config['params'] = cobaya_defaults.get_bao_params_config(model=model)
+    config['params'] = cobaya_defaults.get_cmb_params_config(model=model)
 
-    # setup BAO configuration
-    bao_like = get_bao_like_config(label=label, data_path=data_path)
-    config['likelihood'] = {label: bao_like}
-        
+    # setup CMB configuration
+    config['likelihood'] = {'cmb': cmb_like}
+
     # path to chains
-    run_path = (runs_path / 'bao' / model / label).resolve()
+    run_path = (runs_path / 'cmb' / model / run_label).resolve()
     my_mkdir(run_path)
     config['output'] = str(run_path / 'chain')
 

@@ -68,7 +68,7 @@ def get_bao_params_config(model='lcdm'):
                 'scale': 0.001
             },
             'proposal': 0.001,
-            'drop': 'true'
+            'drop': True
         }
     }
 
@@ -188,5 +188,165 @@ def get_bao_params_config(model='lcdm'):
     params_config['omegam'] = { 'latex': '\\Omega_\\mathrm{m}' }
     params_config['omegal'] = { 'latex': '\\Omega_\\Lambda' }
     params_config['thetastar'] = { 'latex': '\\theta_\\mathrm{s}' }
+
+    return params_config
+
+
+def get_cmb_params_config(model='lcdm'):
+
+    # start with the CMB parameters that are always sampled
+    params_config = {
+        'thetastar': {
+            'prior': {
+                'min': 0.005,
+                'max': 0.1
+            },
+            'ref': {
+                'dist': 'norm',
+                'loc': 0.01041,
+                'scale': 0.000002
+            },
+            'proposal': 0.000002,
+            'latex': '\\theta_\\mathrm{s}'
+        },
+        'ombh2': {
+            'prior': {
+                'min': 0.001,
+                'max': 0.1
+            },
+            'ref': {
+                'dist': 'norm',
+                'loc': 0.0222,
+                'scale': 0.0001
+            },
+            'proposal': 0.0001,
+            'latex': '\\Omega_\\mathrm{b} h^2'
+        },
+        'ombch2': {
+            'prior': {
+                'min': 0.01,
+                'max': 1.0
+            },
+            'ref': {
+                'dist': 'norm',
+                'loc': 0.142,
+                'scale': 0.0005
+            },
+            'proposal': 0.0005,
+            'latex': '\\Omega_\\mathrm{bc} h^2'
+        }
+    }
+
+    # free curvature only in 'olcdm'
+    if model == 'olcdm':
+        params_config['omk'] = {
+            'prior': {
+                'min': -0.3,
+                'max': 0.3
+            },
+            'ref': {
+                'dist': 'norm',
+                'loc': 0.0,
+                'scale': 0.01
+            },
+            'proposal': 0.01,
+            'latex': '\\Omega_\\mathrm{k}'
+        }
+    else:
+        params_config['omk'] = {
+            'value': 0.0,
+            'latex': '\\Omega_\\mathrm{k}'
+        }
+
+    # free neutrino masses only in 'nulcdm'
+    if model == 'nulcdm':
+        params_config['mnu'] = {
+            'prior': {
+                'min': 0.0,
+                'max': 5.0
+            },
+            'ref': {
+                'dist': 'norm',
+                'loc': 0.06,
+                'scale': 0.01
+            },
+            'proposal': 0.01,
+            'latex': '\\sum m_\\nu'
+        }
+    else:
+        params_config['mnu'] = {
+            'value': 0.06,
+            'latex': '\\sum m_\\nu'
+        }
+
+    # free DE eof only in 'w0wa'
+    if model == 'w0wa':
+        params_config['w'] = {
+            'prior': {
+                'min': -3.0,
+                'max': 1.0
+            },
+            'ref': {
+                'dist': 'norm',
+                'loc': -1.0,
+                'scale': 0.02
+            },
+            'proposal': 0.02,
+            'latex': 'w_{0}'
+        }
+        params_config['wa'] = {
+            'prior': {
+                'min': -3.0,
+                'max': 2.0
+            },
+            'ref': {
+                'dist': 'norm',
+                'loc': 0.0,
+                'scale': 0.05
+            },
+            'proposal': 0.05,
+            'latex': 'w_{a}'
+        }
+    else:
+        params_config['w'] = {
+            'value': -1.0,
+            'latex': 'w_{0}'
+        }
+        params_config['wa'] = {
+            'value': 0.0,
+            'latex': 'w_{a}'
+        }
+
+    # add other parameters that are always fixed (for convenience)
+    params_config['nnu'] = {
+        'latex': 'N_\\mathrm{eff}',
+        'value': 3.044
+    }
+
+    # derived parameters to link to CDM density
+    params_config['omch2'] = {
+        'value': 'lambda ombh2, ombch2: ombch2 - ombh2',
+        'derived': False,
+        'min': 0.001,
+        'latex': '\\Omega_\\mathrm{c} h^2'
+    }
+
+    # derived parameters that are set by CAMB, and used in other analyses
+    params_config['H0'] = { 'latex': 'H_0' }
+    params_config['omegam'] = { 'latex': '\\Omega_\\mathrm{m}' }
+    params_config['omegal'] = { 'latex': '\\Omega_\\Lambda' }
+    params_config['rdrag'] = { 'latex': 'r_\\mathrm{d}' }
+    params_config['H0rdrag'] = {
+        'derived': 'lambda H0, rdrag: H0 * rdrag',
+        'latex': 'H_0 r_\\mathrm{d}'
+    }
+    params_config['hrdrag'] = {
+        'derived': 'lambda H0rdrag: H0rdrag / 100',
+        'latex': 'h r_\\mathrm{d}'
+    }
+    params_config['omegamh2'] = {
+        'derived': 'lambda omegam, H0: omegam*(H0/100)**2',
+        'latex': '\\Omega_\\mathrm{m} h^2'
+    }
 
     return params_config
