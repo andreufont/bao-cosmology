@@ -26,6 +26,8 @@ Besides this README file, in the repo you will find the following folders:
 
  - `scripts/` : at this point it only contains the default Cobaya batch script to be used in clusters (like NERSC)
 
+Moreover, the following folders will be created at run time to store some of the results:
+
  - `data/` : forecasted BAO measurements are stored here
 
  - `runs/` : MCMC chains are stored here
@@ -80,7 +82,14 @@ In particular we use the implementation used in the DESI DR2 cosmological analys
 
 The details of the implementation can be found under `py/compressed_cmb.py` .
 
+
 ## How to run the basic analyses?
+
+### CMB-only cosmological analyses
+
+Using only the compressed CMB likelihood we can already constraint models with the CMB parameterization. This can be run for instance with the `run_cmb.ipynb` notebook. 
+
+While the LCDM run can be quite fast (15 minutes in a laptop), other models with less constrained parameters can take a while if running on your laptop.
 
 ### BAO-only cosmological analyses
 
