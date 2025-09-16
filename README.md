@@ -31,6 +31,33 @@ Besides this README file, in the repo you will find the following folders:
  - `runs/` : MCMC chains are stored here
 
 
+## Cosmological models
+
+The code is ready to fit the parameters of a few cosmological models, and for two different parameterizations (BAO and CMB).
+
+### BAO fits
+
+When fitting only BAO data, we will always use `H_0 r_d` as `Omega_m` as free parameters
+
+ - `lcdm` : 2 free parameters (`H_0 r_d` and `Omega_m`)
+
+ - `olcdm` : 3 free parameters (`H_0 r_d` , `Omega_m` and `Omega_k`)
+
+ - `w0wa` : 4 parameters (`H_0 r_d` , `Omega_m`, `w_0` and `w_a`)
+
+### CMB fits
+
+When fitting only CMB data, or combinations of CMB and BAO data, we will always use instead the 3 free parameters of the compressed CMB likelihood: `theta_star`, `Omega_b h^2` and `Omega_bc h^2` .
+
+ - `lcdm` : 3 free parameters (`theta_star`, `Omega_b h^2` and `Omega_bc h^2`)
+   
+ - `olcdm` : 4 free parameters (`theta_star`, `Omega_b h^2`, `Omega_bc h^2` and `Omega_k`)
+
+ - `nulcdm` : 4 free parameters (`theta_star`, `Omega_b h^2`, `Omega_bc h^2` and `mnu`)
+
+ - `w0wa` : 5 parameters (`theta_star`, `Omega_b h^2`, `Omega_bc h^2`, `w_0` and `w_a`)
+
+
 ## How to run the basic analyses?
 
 First of all, several paths in the notebooks are hardcoded in the beginning of the notebooks.
