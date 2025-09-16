@@ -93,5 +93,6 @@ While the LCDM run can be quite fast (15 minutes in a laptop), other models with
 
 ### BAO-only cosmological analyses
 
+Using only BAO likelihoods we can also constraint models with the BAO parameterization. In the notebook `run_bao.ipynb` you can see how to run analyses for the forecasted DESI-Y5 likelihoods, either combined analyses or one tracer at a time (BGS, LRG, ELG, QSO and LYA separately).
 
 
