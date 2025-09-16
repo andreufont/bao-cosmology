@@ -20,15 +20,15 @@ some of the scripts use the following cosmology-specific packages that can be in
 
 Besides this README file, in the repo you will find the following folders:
 
- - py/ : a few python modules used by the notebooks and scripts
+ - `py/` : a few python modules used by the notebooks and scripts
  
- - notebooks/ : examples for how to run the BAO forecasts and the cosmological inference
+ - `notebooks/` : examples for how to run the BAO forecasts and the cosmological inference
 
- - scripts/ : at this point it only contains the default Cobaya batch script to be used in clusters (like NERSC)
+ - `scripts/` : at this point it only contains the default Cobaya batch script to be used in clusters (like NERSC)
 
- - data/ : forecasted BAO measurements are stored here
+ - `data/` : forecasted BAO measurements are stored here
 
- - runs/ : MCMC chains are stored here
+ - `runs/` : MCMC chains are stored here
 
 
 ## How to run the basic analyses?
@@ -42,9 +42,9 @@ The remaining of the notebook should run once these initial paths have been set.
 
 There are two notebooks to generate synthetic BAO likelihoods that can later on be used to run chains.
 
- - make_desi_data.ipynb : generates a DESI-Y5 forecast 
+ - `make_desi_data.ipynb` : generates a DESI-Y5 forecast 
 
- - make_mock_data.ipynb : generates other, not realistic BAO forecasts at different z that can be useful 
+ - `make_mock_data.ipynb` : generates other, not realistic BAO forecasts at different z that can be useful 
 
 
 ### BAO-only cosmological analyses
