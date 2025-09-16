@@ -58,12 +58,11 @@ When fitting only CMB data, or combinations of CMB and BAO data, we will always 
  - `w0wa` : 5 parameters (`theta_star`, `Omega_b h^2`, `Omega_bc h^2`, `w_0` and `w_a`)
 
 
-## How to run the basic analyses?
+## Create likelihoods
 
 First of all, several paths in the notebooks are hardcoded in the beginning of the notebooks.
 These will need to be changed in order for the notebooks to run on your laptop / at NERSC. 
 The remaining of the notebook should run once these initial paths have been set.
-
 
 ### Make synthetic BAO likelihoods
 
@@ -71,8 +70,17 @@ There are two notebooks to generate synthetic BAO likelihoods that can later on 
 
  - `make_desi_data.ipynb` : generates a DESI-Y5 forecast 
 
- - `make_mock_data.ipynb` : generates other, not realistic BAO forecasts at different z that can be useful 
+ - `make_mock_data.ipynb` : generates toy (not realistic) BAO forecasts at different z
 
+### Compressed CMB likelihood
+
+In order to simplify the analyses, we only use a compressed CMB likelihood that is independent from late-time cosmology. This is a 3D Gaussian likelihood with free parameters: `theta_star`, `Omega_b h^2` and `Omega_bc h^2`. 
+
+In particular we use the implementation used in the DESI DR2 cosmological analysis (https://arxiv.org/abs/2503.14738), itself based on the analysis by Lemos & Lewis (2023, https://arxiv.org/abs/2302.12911).
+
+The details of the implementation can be found under `py/compressed_cmb.py` .
+
+## How to run the basic analyses?
 
 ### BAO-only cosmological analyses
 
